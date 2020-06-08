@@ -8,6 +8,7 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
     will-change: transform;
   }
   .cls-1 {
@@ -52,8 +53,6 @@
   {style}
   id="trees"
   xmlns="http://www.w3.org/2000/svg"
-  width="2560"
-  height="1440"
   viewBox="0 0 2560 1440">
   <title>trees-2</title>
   <rect class="cls-1" x="1419.37" y="1115.19" width="16.35" height="37.13" />

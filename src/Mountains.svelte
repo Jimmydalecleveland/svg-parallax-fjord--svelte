@@ -8,6 +8,7 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
     will-change: transform;
   }
   .cls-1 {
@@ -22,8 +23,6 @@
   {style}
   id="mountains"
   xmlns="http://www.w3.org/2000/svg"
-  width="2560"
-  height="1440"
   viewBox="0 0 2560 1440">
   <title>mountains-2</title>
   <polygon

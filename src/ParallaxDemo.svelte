@@ -8,43 +8,40 @@
     // { component: 'cloud-2-light.svg', layer: 0 },
     // { component: 'cloud-4-light.svg', layer: 0 },
     // { component: 'cloud-5-light.svg', layer: 0 },
-    { component: Mountains, layer: 1 },
+    { component: Mountains, speed: 0.3 },
     // { component: 'cloud-1-dark.svg', layer: 2 },
     // { component: 'cloud-3-dark.svg', layer: 2 },
-    { component: Hills, layer: 3 },
-    { component: Trees, layer: 4 },
-    { component: Ground, layer: 5 },
+    { component: Hills, speed: 0.6 },
+    { component: Trees, speed: 0.9 },
+    { component: Ground, speed: 1 },
     // { component: 'wave-3.svg', layer: 6 },
     // { component: 'wave-2.svg', layer: 7 },
     // { component: 'wave-1.svg', layer: 8 },
   ]
 
   let y
+  $: console.table({
+    y,
+    yTimesSpeed: -y * 2,
+    translate: (-y * 2) / (layers.length - 1),
+  })
 </script>
 
 <style>
   .parallax-container {
     position: fixed;
-    width: 2400px;
+    width: 2560px;
     height: 900px;
     left: 50%;
     transform: translate(-50%, 0);
   }
 
-  .parallax-container img:last-child::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgb(45, 10, 13);
-  }
-
   .foreground {
     position: absolute;
-    top: 2000px;
+    top: 800px;
     left: 0;
     width: 100%;
-    height: calc(100% - 712px);
+    height: 100vh;
     background-color: #37559c;
     color: white;
   }
@@ -62,7 +59,8 @@
   {#each layers as layer}
     <svelte:component
       this={layer.component}
-      style="transform: translate(0, {(-y * layer.layer) / (layers.length - 1)}px" />
+      style="transform: translate(0, {-y * layer.speed}px" />
+    <!-- style="transform: translate(0, {(-y * layer.speed) / (layers.length - 1)}px" /> -->
   {/each}
 </main>
 
