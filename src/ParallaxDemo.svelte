@@ -27,7 +27,13 @@
 
 <style>
   .parallax-container {
-    background: rgb(calc(var(--y) / 3), 94, 83);
+    background: rgb(0, 135, 213); /* 255, -41, -130*/
+    background: rgb(255, 94, 33);
+    background: rgb(
+      calc(var(--y) / 2.75),
+      calc(135 - var(--y) / 17),
+      calc(213 - var(--y) / 5.4)
+    );
     position: fixed;
     width: 2560px;
     height: 1000px;
