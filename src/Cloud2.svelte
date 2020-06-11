@@ -5,9 +5,18 @@
 <style>
   svg {
     position: absolute;
+    animation: cloud2 30s linear infinite alternate;
   }
   .cls-1 {
     fill: #e7ebf2;
+  }
+  @keyframes cloud2 {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-350px, 0, 0);
+    }
   }
 </style>
 
