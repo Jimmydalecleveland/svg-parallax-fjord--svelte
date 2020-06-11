@@ -1,4 +1,9 @@
 <script>
+  import Cloud1 from './Cloud1.svelte'
+  import Cloud2 from './Cloud2.svelte'
+  import Cloud3 from './Cloud3.svelte'
+  import Cloud4 from './Cloud4.svelte'
+  import Cloud5 from './Cloud5.svelte'
   import Mountains from './Mountains.svelte'
   import Hills from './Hills.svelte'
   import Trees from './Trees.svelte'
@@ -8,12 +13,12 @@
   import Wave3 from './Wave3.svelte'
 
   const layers = [
-    // { component: 'cloud-2-light.svg', layer: 0 },
-    // { component: 'cloud-4-light.svg', layer: 0 },
-    // { component: 'cloud-5-light.svg', layer: 0 },
+    { component: Cloud1, speed: 0.1 },
+    { component: Cloud2, speed: 0.1 },
+    { component: Cloud3, speed: 0.1 },
+    { component: Cloud4, speed: 0.1 },
+    { component: Cloud5, speed: 0.1 },
     { component: Mountains, speed: 0.3 },
-    // { component: 'cloud-1-dark.svg', layer: 2 },
-    // { component: 'cloud-3-dark.svg', layer: 2 },
     { component: Hills, speed: 0.6 },
     { component: Trees, speed: 0.8 },
     { component: Ground, speed: 0.9 },
@@ -27,13 +32,12 @@
 
 <style>
   .parallax-container {
-    background: rgb(0, 135, 213); /* 255, -41, -130*/
-    background: rgb(255, 94, 33);
     background: rgb(
       calc(var(--y) / 2.75),
       calc(135 - var(--y) / 17),
       calc(213 - var(--y) / 5.4)
     );
+    /* This container should stay fixed and centered on viewport resize */
     position: fixed;
     width: 2560px;
     height: 1000px;
