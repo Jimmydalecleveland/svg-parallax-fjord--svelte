@@ -5,6 +5,7 @@
 <style>
   .parallax-wrapper {
     position: absolute;
+    will-change: transform;
   }
   svg {
     will-change: transform;

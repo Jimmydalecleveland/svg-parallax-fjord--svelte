@@ -13,12 +13,12 @@
   import Wave3 from './Wave3.svelte'
 
   const layers = [
-    { component: Cloud1, speed: 0.1 },
-    { component: Cloud2, speed: 0.1 },
-    { component: Cloud5, speed: 0.1 },
+    { component: Cloud2, speed: 0.2 },
+    { component: Cloud5, speed: 0.2 },
+    { component: Cloud4, speed: 0.2 },
     { component: Mountains, speed: 0.3 },
+    { component: Cloud1, speed: 0.3 },
     { component: Cloud3, speed: 0.3 },
-    { component: Cloud4, speed: 0.3 },
     { component: Hills, speed: 0.6 },
     { component: Trees, speed: 0.8 },
     { component: Ground, speed: 0.9 },
