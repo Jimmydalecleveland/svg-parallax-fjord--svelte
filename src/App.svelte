@@ -27,15 +27,15 @@
     { component: Wave1, speed: 1 },
   ]
 
-  let y
+  let scrollY
 </script>
 
 <style>
   .parallax-container {
     background: rgb(
-      calc(var(--y) / 2.75),
-      calc(135 - var(--y) / 17),
-      calc(213 - var(--y) / 5.4)
+      calc(var(--scrollY) / 2.75),
+      calc(135 - var(--scrollY) / 17),
+      calc(213 - var(--scrollY) / 5.4)
     );
     /* This container should stay fixed and centered on viewport resize */
     position: fixed;
@@ -62,14 +62,13 @@
   }
 </style>
 
-<svelte:window bind:scrollY={y} />
+<svelte:window bind:scrollY />
 
-<main class="parallax-container" style="--y: {y}">
+<main class="parallax-container" style="--scrollY: {scrollY}">
   {#each layers as layer}
     <svelte:component
       this={layer.component}
-      style="transform: translateY({-y * layer.speed}px)" />
-    <!-- style="transform: translate(0, {(-y * layer.speed) / (layers.length - 1)}px" /> -->
+      style="transform: translateY({-scrollY * layer.speed}px)" />
   {/each}
 </main>
 
