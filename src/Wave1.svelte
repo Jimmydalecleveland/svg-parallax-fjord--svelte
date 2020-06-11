@@ -18,10 +18,10 @@
       transform: translate3d(0, 0, 0);
     }
     50% {
-      transform: translate3d(-2.5%, -5%, 0);
+      transform: translate3d(-1.5%, -3%, 0);
     }
     100% {
-      transform: translate3d(-5%, 0, 0);
+      transform: translate3d(-3%, 0, 0);
     }
   }
 </style>
