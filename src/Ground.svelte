@@ -20,7 +20,6 @@
   {style}
   id="ground"
   xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 2560 1440">
-  <title>ground-3</title>
-  <rect class="cls-1" y="1152" width="2560" height="150" />
+  viewBox="0 0 2560 1000">
+  <rect class="cls-1" y="824.71" width="2560" height="175.29" />
 </svg>

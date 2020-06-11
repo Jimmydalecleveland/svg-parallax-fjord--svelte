@@ -3,6 +3,9 @@
   import Hills from './Hills.svelte'
   import Trees from './Trees.svelte'
   import Ground from './Ground.svelte'
+  import Wave1 from './Wave1.svelte'
+  import Wave2 from './Wave2.svelte'
+  import Wave3 from './Wave3.svelte'
 
   const layers = [
     // { component: 'cloud-2-light.svg', layer: 0 },
@@ -12,33 +15,29 @@
     // { component: 'cloud-1-dark.svg', layer: 2 },
     // { component: 'cloud-3-dark.svg', layer: 2 },
     { component: Hills, speed: 0.6 },
-    { component: Trees, speed: 0.9 },
-    { component: Ground, speed: 1 },
-    // { component: 'wave-3.svg', layer: 6 },
-    // { component: 'wave-2.svg', layer: 7 },
-    // { component: 'wave-1.svg', layer: 8 },
+    { component: Trees, speed: 0.8 },
+    { component: Ground, speed: 0.9 },
+    { component: Wave3, speed: 0.9 },
+    { component: Wave2, speed: 0.92 },
+    { component: Wave1, speed: 1 },
   ]
 
   let y
-  $: console.table({
-    y,
-    yTimesSpeed: -y * 2,
-    translate: (-y * 2) / (layers.length - 1),
-  })
 </script>
 
 <style>
   .parallax-container {
+    background: rgb(calc(var(--y) / 3), 94, 83);
     position: fixed;
     width: 2560px;
-    height: 900px;
+    height: 1000px;
     left: 50%;
     transform: translate(-50%, 0);
   }
 
   .foreground {
     position: absolute;
-    top: 800px;
+    top: 980px;
     left: 0;
     width: 100%;
     height: 100vh;
@@ -55,11 +54,11 @@
 
 <svelte:window bind:scrollY={y} />
 
-<main class="parallax-container">
+<main class="parallax-container" style="--y: {y}">
   {#each layers as layer}
     <svelte:component
       this={layer.component}
-      style="transform: translate(0, {-y * layer.speed}px" />
+      style="transform: translateY({-y * layer.speed}px)" />
     <!-- style="transform: translate(0, {(-y * layer.speed) / (layers.length - 1)}px" /> -->
   {/each}
 </main>
