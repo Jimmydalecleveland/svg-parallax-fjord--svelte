@@ -19,7 +19,7 @@
     }
 
     100% {
-      transform: translate3d(0, -3%, 0);
+      transform: translate3d(0, -1%, 0);
     }
   }
 </style>
