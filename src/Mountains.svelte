@@ -9,7 +9,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    will-change: transform;
   }
   .cls-1 {
     fill: #e1eaea;
