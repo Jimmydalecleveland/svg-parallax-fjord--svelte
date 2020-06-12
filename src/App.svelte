@@ -7,6 +7,7 @@
   import Mountains from './Mountains.svelte'
   import Hills from './Hills.svelte'
   import Trees from './Trees.svelte'
+  import WindTrail from './WindTrail.svelte'
   import Ground from './Ground.svelte'
   import Wave1 from './Wave1.svelte'
   import Wave2 from './Wave2.svelte'
@@ -21,6 +22,7 @@
     { component: Cloud3, speed: 0.3 },
     { component: Hills, speed: 0.6 },
     { component: Trees, speed: 0.8 },
+    { component: WindTrail, speed: 0.8 },
     { component: Ground, speed: 0.9 },
     { component: Wave3, speed: 0.9 },
     { component: Wave2, speed: 0.92 },
