@@ -2,6 +2,8 @@
   import { onDestroy } from 'svelte'
   export let style
 
+  let intervalId
+
   function initializeSnap() {
     const s = Snap(document.querySelector('#wavy-boi'))
     const sDark = s.select('#wavy-boi__dark')
@@ -13,58 +15,50 @@
     const sLightPathMorphed =
       'M917.05,788.47c10.1-1,14.26-11.42,17.48-20s4-13.56,9.63-23.48,7.12-15.89,4.41-30.5c-1.16-6.2-8.35-22.05-13.73-30.67-1.53-2.45-4.13-15.32-5.78-19.48-17.67-44.6-42.84-50-50.65-46.2,15.24,10.36,31,28.88,34,45.48,4.47,24.12,18.93,42,19.81,60.88S919.18,749.6,921.34,768c.72,6.14-2.14,14.32-4.6,20.52Z'
 
-    setTimeout(toMorphed, 3000)
-    const intervalId = setInterval(toMorphed, 8000)
+    setTimeout(blowTree, 3000)
+    intervalId = setInterval(blowTree, 8000)
 
-    function toMorphed() {
-      sDark.animate(
-        {
-          path: sDarkPathMorphed,
-        },
-        1500,
-        easeOutBack
-      )
-      sLight.animate(
-        {
-          path: sLightPathMorphed,
-        },
-        1500,
-        easeOutBack,
-        toOriginal
-      )
+    function blowTree() {
+      toMorphed(sDark, sDarkPathMorphed, 1500, easeOutBack)
+      toMorphed(sLight, sLightPathMorphed, 1500, easeOutBack, toOriginal)
     }
 
     function toOriginal() {
-      sDark.animate(
-        {
-          path: sDarkPath,
-        },
-        2000,
-        easeInOutBack
-      )
-      sLight.animate(
-        {
-          path: sLightPath,
-        },
-        2000,
-        easeInOutBack
-      )
+      toMorphed(sDark, sDarkPath, 2000, easeInOutBack)
+      toMorphed(sLight, sLightPath, 2000, easeInOutBack)
     }
+  }
 
-    // copied easing functions from the web
-    function easeOutBack(x) {
-      const c1 = 1.70158
-      const c3 = c1 + 1
-      return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2)
-    }
+  function toMorphed(
+    snappedElement,
+    toPath,
+    duration,
+    easingFunc,
+    postAnimationCb
+  ) {
+    snappedElement.animate(
+      {
+        path: toPath,
+      },
+      duration,
+      easingFunc,
+      postAnimationCb
+    )
+  }
 
-    function easeInOutBack(x) {
-      const c1 = 1.70158
-      const c2 = c1 * 1.525
-      return x < 0.5
-        ? (Math.pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
-        : (Math.pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2
-    }
+  // copied easing functions from the web
+  function easeOutBack(x) {
+    const c1 = 1.70158
+    const c3 = c1 + 1
+    return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2)
+  }
+
+  function easeInOutBack(x) {
+    const c1 = 1.70158
+    const c2 = c1 * 1.525
+    return x < 0.5
+      ? (Math.pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
+      : (Math.pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2
   }
 
   onDestroy(() => {
