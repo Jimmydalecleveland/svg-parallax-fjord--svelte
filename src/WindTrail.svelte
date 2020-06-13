@@ -1,36 +1,5 @@
 <script>
   export let style
-
-  function initializeSnap() {
-    const s = Snap(document.querySelector('#wind_trail'))
-    const windPath = s.select('path').attr('d')
-    const windPathLength = Snap.path.getTotalLength(windPath)
-    const windDraw = s.path(windPath)
-    windDraw.attr({
-      fill: 'none',
-      stroke: '#ccc',
-      'stroke-dasharray': 200 + ' ' + windPathLength,
-      'stroke-dashoffset': 200,
-      'stroke-width': 5,
-      'stroke-linecap': 'round',
-      'stroke-linejoin': 'round',
-      'stroke-miterlimit': 10,
-    })
-
-    setTimeout(windAnimate, 2000)
-    setInterval(windAnimate, 8000)
-
-    function windAnimate() {
-      Snap.animate(
-        200,
-        -windPathLength,
-        function(value) {
-          windDraw.attr({ strokeDashoffset: value })
-        },
-        2000
-      )
-    }
-  }
 </script>
 
 <style>
@@ -43,14 +12,25 @@
   }
   .cls-1 {
     fill: none;
+    stroke: #ccc;
+    stroke-width: 4;
+    stroke-dasharray: 210 632;
+    stroke-dashoffset: 210;
+    animation: windBlow 8s cubic-bezier(0.47, 0, 0.6, 0.37) 3s infinite;
+    opacity: 1;
+  }
+
+  @keyframes windBlow {
+    5% {
+      opacity: 1;
+    }
+    20%,
+    100% {
+      stroke-dashoffset: -632;
+      opacity: 0;
+    }
   }
 </style>
-
-<svelte:head>
-  <script src="/snap.svg-min.js" on:load={initializeSnap}>
-
-  </script>
-</svelte:head>
 
 <svg
   {style}

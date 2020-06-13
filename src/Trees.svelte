@@ -30,7 +30,11 @@
       })
     }
 
-    intervalId = setInterval(blowTrees, 6000)
+    function startBlowTrees() {
+      intervalId = setInterval(blowTrees, 8000)
+    }
+
+    setTimeout(startBlowTrees, 3000)
   }
 
   // Move item in array to another position in the array
