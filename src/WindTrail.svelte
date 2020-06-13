@@ -13,16 +13,21 @@
   .cls-1 {
     fill: none;
     stroke: #ccc;
-    stroke-width: 3;
-    stroke-dasharray: 632;
-    stroke-dashoffset: 632;
-    animation: windBlow 8s cubic-bezier(0.55, 0.09, 0.68, 0.53) 3s infinite;
+    stroke-width: 4;
+    stroke-dasharray: 210 632;
+    stroke-dashoffset: 210;
+    animation: windBlow 8s cubic-bezier(0.47, 0, 0.6, 0.37) 3s infinite;
+    opacity: 1;
   }
 
   @keyframes windBlow {
+    5% {
+      opacity: 1;
+    }
     20%,
     100% {
       stroke-dashoffset: -632;
+      opacity: 0;
     }
   }
 </style>
