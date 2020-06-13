@@ -31,6 +31,7 @@
     }
 
     function startBlowTrees() {
+      blowTrees()
       intervalId = setInterval(blowTrees, 8000)
     }
 
