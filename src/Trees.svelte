@@ -14,58 +14,68 @@
       const { darkPaths, lightPaths } = getDarkAndLightTreePaths(tree)
 
       function blowTree() {
-        toMorphed(darkPaths.target, darkPaths.toPath, 1500, easeOutBack)
-        toMorphed(
+        animateElement(darkPaths.target, darkPaths.toPath, 1500, easeOutBack)
+        animateElement(
           lightPaths.target,
           lightPaths.toPath,
           1500,
           easeOutBack,
-          toOriginal
+          unblowTree
         )
       }
 
-      function toOriginal() {
-        toMorphed(darkPaths.target, darkPaths.fromPath, 2000, easeInOutBack)
-        toMorphed(lightPaths.target, lightPaths.fromPath, 2000, easeInOutBack)
+      function unblowTree() {
+        animateElement(
+          darkPaths.target,
+          darkPaths.fromPath,
+          2000,
+          easeInOutBack
+        )
+        animateElement(
+          lightPaths.target,
+          lightPaths.fromPath,
+          2000,
+          easeInOutBack
+        )
       }
 
       setTimeout(blowTree, 3000)
       intervalIds[tree.id] = setInterval(blowTree, 8000)
     })
+  }
 
-    function getTreePaths(snapInstance, elementId, subSelector) {
-      const target = snapInstance.select(`#${elementId}__${subSelector}`)
-      const fromPath = target.attr('d')
-      const toPath = treesBlown[elementId][subSelector]
-      console.log({ target, fromPath, toPath })
+  function getTreePaths(snapInstance, elementId, subSelector) {
+    const target = snapInstance.select(`#${elementId}__${subSelector}`)
+    const fromPath = target.attr('d')
+    const toPath = treesBlown[elementId][subSelector]
+    console.log({ target, fromPath, toPath })
 
-      return {
-        target,
-        fromPath,
-        toPath,
-      }
-    }
-
-    function getDarkAndLightTreePaths(svgElement) {
-      const s = Snap(svgElement)
-      const darkPaths = getTreePaths(s, svgElement.id, 'dark')
-      const lightPaths = getTreePaths(s, svgElement.id, 'light')
-
-      return {
-        darkPaths,
-        lightPaths,
-      }
+    return {
+      target,
+      fromPath,
+      toPath,
     }
   }
 
-  function toMorphed(
-    snappedElement,
+  function getDarkAndLightTreePaths(svgElement) {
+    const s = Snap(svgElement)
+    const darkPaths = getTreePaths(s, svgElement.id, 'dark')
+    const lightPaths = getTreePaths(s, svgElement.id, 'light')
+
+    return {
+      darkPaths,
+      lightPaths,
+    }
+  }
+
+  function animateElement(
+    snapTarget,
     toPath,
     duration,
     easingFunc,
     postAnimationCb
   ) {
-    snappedElement.animate(
+    snapTarget.animate(
       {
         path: toPath,
       },
