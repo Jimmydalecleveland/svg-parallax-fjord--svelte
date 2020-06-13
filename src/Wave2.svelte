@@ -7,7 +7,6 @@
     position: absolute;
   }
   svg {
-    will-change: transform;
     animation: wave2 5s ease-in-out infinite alternate;
   }
   .cls-1 {

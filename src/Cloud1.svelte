@@ -5,10 +5,8 @@
 <style>
   .parallax-wrapper {
     position: absolute;
-    will-change: transform;
   }
   svg {
-    will-change: transform;
     animation: cloud4 30s linear infinite alternate;
   }
   .cls-1 {
