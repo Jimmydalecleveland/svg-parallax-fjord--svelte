@@ -7,11 +7,18 @@
 
   function initializeSnap() {
     const trees = document.querySelectorAll('.tree')
+    // Turn NodeList into array to get .sort method
     const sortedTrees = [...trees].sort((a, b) => {
       const aIdNumber = Number(a.id.split('tree')[1])
       const bIdNumber = Number(b.id.split('tree')[1])
       return aIdNumber - bIdNumber
     })
+    // Stagger some trees for a more natural look
+    arrayMovePosition(sortedTrees, 2, 9)
+    arrayMovePosition(sortedTrees, 10, 16)
+    arrayMovePosition(sortedTrees, 14, 20)
+
+    // Create an array of objects that contain each trees paths and element target
     const allTreePaths = sortedTrees.map(tree => getDarkAndLightTreePaths(tree))
 
     function blowTrees() {
@@ -24,6 +31,13 @@
     }
 
     intervalId = setInterval(blowTrees, 6000)
+  }
+
+  // Move item in array to another position in the array
+  // Used to create a few staggered trees for a more natural look
+  function arrayMovePosition(arr, indexToMove, newIndex) {
+    if (newIndex > arr.length) return
+    arr.splice(newIndex, 0, arr.splice(indexToMove, 1)[0])
   }
 
   function getTreePaths(snapInstance, elementId, subSelector) {
