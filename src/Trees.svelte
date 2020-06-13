@@ -7,16 +7,23 @@
 
   function initializeSnap() {
     const trees = document.querySelectorAll('.tree')
-    const allTreePaths = [...trees].map(tree => getDarkAndLightTreePaths(tree))
+    const sortedTrees = [...trees].sort((a, b) => {
+      const aIdNumber = Number(a.id.split('tree')[1])
+      const bIdNumber = Number(b.id.split('tree')[1])
+      return aIdNumber - bIdNumber
+    })
+    const allTreePaths = sortedTrees.map(tree => getDarkAndLightTreePaths(tree))
 
     function blowTrees() {
+      let startTime = 0
       allTreePaths.forEach(treePaths => {
-        blowTree(treePaths, 1500)
+        setTimeout(() => {
+          blowTree(treePaths, 1500)
+        }, (startTime = startTime + 50))
       })
     }
 
-    blowTrees()
-    intervalId = setInterval(blowTrees, 4000)
+    intervalId = setInterval(blowTrees, 6000)
   }
 
   function getTreePaths(snapInstance, elementId, subSelector) {
