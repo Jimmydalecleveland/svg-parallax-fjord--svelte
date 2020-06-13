@@ -4,51 +4,28 @@
   import { easeInOutBack, easeOutBack } from './helpers.js'
   export let style
 
-  let intervalIds = {}
+  let intervalId
   let trees
 
   function initializeSnap() {
     trees = document.querySelectorAll('.tree')
 
-    trees.forEach(tree => {
-      const { darkPaths, lightPaths } = getDarkAndLightTreePaths(tree)
+    const allTreePaths = [...trees].map(tree => getDarkAndLightTreePaths(tree))
 
-      function blowTree() {
-        animateElement(darkPaths.target, darkPaths.toPath, 1500, easeOutBack)
-        animateElement(
-          lightPaths.target,
-          lightPaths.toPath,
-          1500,
-          easeOutBack,
-          unblowTree
-        )
-      }
+    function blowTrees() {
+      allTreePaths.forEach(treePaths => {
+        blowTree(treePaths, 1500)
+      })
+    }
 
-      function unblowTree() {
-        animateElement(
-          darkPaths.target,
-          darkPaths.fromPath,
-          2000,
-          easeInOutBack
-        )
-        animateElement(
-          lightPaths.target,
-          lightPaths.fromPath,
-          2000,
-          easeInOutBack
-        )
-      }
-
-      setTimeout(blowTree, 3000)
-      intervalIds[tree.id] = setInterval(blowTree, 8000)
-    })
+    blowTrees()
+    intervalId = setInterval(blowTrees, 4000)
   }
 
   function getTreePaths(snapInstance, elementId, subSelector) {
     const target = snapInstance.select(`#${elementId}__${subSelector}`)
     const fromPath = target.attr('d')
     const toPath = treesBlown[elementId][subSelector]
-    console.log({ target, fromPath, toPath })
 
     return {
       target,
@@ -65,6 +42,36 @@
     return {
       darkPaths,
       lightPaths,
+    }
+  }
+
+  function blowTree(treePaths, animationTime, animationFunc) {
+    if (!treePaths || !treePaths.darkPaths.fromPath) return
+
+    const { darkPaths, lightPaths } = treePaths
+    animateElement(
+      darkPaths.target,
+      darkPaths.toPath,
+      animationTime,
+      easeOutBack
+    )
+    animateElement(
+      lightPaths.target,
+      lightPaths.toPath,
+      animationTime,
+      easeOutBack,
+      unblowTree
+    )
+
+    function unblowTree() {
+      const { darkPaths, lightPaths } = treePaths
+      animateElement(darkPaths.target, darkPaths.fromPath, 2000, easeInOutBack)
+      animateElement(
+        lightPaths.target,
+        lightPaths.fromPath,
+        2000,
+        easeInOutBack
+      )
     }
   }
 
@@ -86,7 +93,7 @@
   }
 
   onDestroy(() => {
-    intervalIds.forEach(id => clearInterval(id))
+    clearInterval(intervalId)
   })
 </script>
 
