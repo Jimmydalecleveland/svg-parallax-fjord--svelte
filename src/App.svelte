@@ -22,7 +22,7 @@
     { component: Cloud3, speed: 0.3 },
     { component: Hills, speed: 0.6 },
     { component: Trees, speed: 0.8 },
-    { component: WindTrail, speed: 0.8 },
+    { component: WindTrail, speed: 0.7 },
     { component: Ground, speed: 0.9 },
     { component: Wave3, speed: 0.9 },
     { component: Wave2, speed: 0.92 },
