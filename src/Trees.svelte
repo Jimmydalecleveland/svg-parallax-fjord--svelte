@@ -1,6 +1,7 @@
 <script>
   import { onDestroy } from 'svelte'
   import treesBlown from './treesBlown.js'
+  import { easeInOutBack, easeOutBack } from './helpers.js'
   export let style
 
   let intervalIds = {}
@@ -10,60 +11,51 @@
     trees = document.querySelectorAll('.tree')
 
     trees.forEach(tree => {
-      console.log(tree, tree.id)
-      const s = Snap(tree)
-      const sDark = s.select(`#${tree.id}__dark`)
-      const sLight = s.select(`#${tree.id}__light`)
-      const sDarkPath = sDark.attr('d')
-      const sLightPath = sLight.attr('d')
-      const sDarkPathMorphed = treesBlown[tree.id].dark
-      const sLightPathMorphed = treesBlown[tree.id].light
-      if (tree.id === 'tree16') {
-        console.log({
-          sDark,
-          sLight,
-          sDarkPath,
-          sLightPath,
-          sDarkPathMorphed,
-          sLightPathMorphed,
-        })
-      }
+      const { darkPaths, lightPaths } = getDarkAndLightTreePaths(tree)
 
       function blowTree() {
-        toMorphed(sDark, sDarkPathMorphed, 1500, easeOutBack)
-        toMorphed(sLight, sLightPathMorphed, 1500, easeOutBack, toOriginal)
+        toMorphed(darkPaths.target, darkPaths.toPath, 1500, easeOutBack)
+        toMorphed(
+          lightPaths.target,
+          lightPaths.toPath,
+          1500,
+          easeOutBack,
+          toOriginal
+        )
       }
 
       function toOriginal() {
-        toMorphed(sDark, sDarkPath, 2000, easeInOutBack)
-        toMorphed(sLight, sLightPath, 2000, easeInOutBack)
+        toMorphed(darkPaths.target, darkPaths.fromPath, 2000, easeInOutBack)
+        toMorphed(lightPaths.target, lightPaths.fromPath, 2000, easeInOutBack)
       }
 
       setTimeout(blowTree, 3000)
       intervalIds[tree.id] = setInterval(blowTree, 8000)
     })
-    // const s = Snap(document.querySelector('#tree15'))
-    // const sDark = s.select('#tree15__dark')
-    // const sLight = s.select('#tree15__light')
-    // const sDarkPath = sDark.attr('d')
-    // const sLightPath = sLight.attr('d')
-    // const sDarkPathMorphed =
-    //   'M877,618.72c20.41-10,46.91,28.49,52,45.6,1.29,4.28,4.25,17,5.78,19.48,5.38,8.62,12.57,24.47,13.73,30.67,2.71,14.61,1.2,20.57-4.41,30.5s-6.42,14.88-9.63,23.48-7.37,19.2-17.48,20c-11.86,1-14.33-5.91-21.81-14.9-3.28-3.94-6.56-12.8-11.35-20.51-2.14-3.45-9.89-18-11-24.47-2.56-15,7.48-20.28,4.09-31.89-4.65-16-14.23-12.36-8.2-34.63C872.35,649,861.13,626.48,877,618.72Z'
-    // const sLightPathMorphed =
-    //   'M917.05,788.47c10.1-1,14.26-11.42,17.48-20s4-13.56,9.63-23.48,7.12-15.89,4.41-30.5c-1.16-6.2-8.35-22.05-13.73-30.67-1.53-2.45-4.13-15.32-5.78-19.48-17.67-44.6-42.84-50-50.65-46.2,15.24,10.36,31,28.88,34,45.48,4.47,24.12,18.93,42,19.81,60.88S919.18,749.6,921.34,768c.72,6.14-2.14,14.32-4.6,20.52Z'
 
-    // setTimeout(blowTree, 3000)
-    // intervalId = setInterval(blowTree, 8000)
+    function getTreePaths(snapInstance, elementId, subSelector) {
+      const target = snapInstance.select(`#${elementId}__${subSelector}`)
+      const fromPath = target.attr('d')
+      const toPath = treesBlown[elementId][subSelector]
+      console.log({ target, fromPath, toPath })
 
-    // function blowTree() {
-    //   toMorphed(sDark, treesBlown.tree15.dark, 1500, easeOutBack)
-    //   toMorphed(sLight, treesBlown.tree15.light, 1500, easeOutBack, toOriginal)
-    // }
+      return {
+        target,
+        fromPath,
+        toPath,
+      }
+    }
 
-    // function toOriginal() {
-    //   toMorphed(sDark, sDarkPath, 2000, easeInOutBack)
-    //   toMorphed(sLight, sLightPath, 2000, easeInOutBack)
-    // }
+    function getDarkAndLightTreePaths(svgElement) {
+      const s = Snap(svgElement)
+      const darkPaths = getTreePaths(s, svgElement.id, 'dark')
+      const lightPaths = getTreePaths(s, svgElement.id, 'light')
+
+      return {
+        darkPaths,
+        lightPaths,
+      }
+    }
   }
 
   function toMorphed(
@@ -81,21 +73,6 @@
       easingFunc,
       postAnimationCb
     )
-  }
-
-  // copied easing functions from the web
-  function easeOutBack(x) {
-    const c1 = 1.70158
-    const c3 = c1 + 1
-    return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2)
-  }
-
-  function easeInOutBack(x) {
-    const c1 = 1.70158
-    const c2 = c1 * 1.525
-    return x < 0.5
-      ? (Math.pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
-      : (Math.pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2
   }
 
   onDestroy(() => {
