@@ -30,15 +30,13 @@
   ]
 
   let scrollY
+  $: red = scrollY / 2.75
+  $: green = 135 - scrollY / 17
+  $: blue = 213 - scrollY / 5.4
 </script>
 
 <style>
   .parallax-container {
-    background: rgb(
-      calc(var(--scrollY) / 2.75),
-      calc(135 - var(--scrollY) / 17),
-      calc(213 - var(--scrollY) / 5.4)
-    );
     /* This container should stay fixed and centered on viewport resize */
     position: fixed;
     width: 2560px;
@@ -66,7 +64,9 @@
 
 <svelte:window bind:scrollY />
 
-<main class="parallax-container" style="--scrollY: {scrollY}">
+<main
+  class="parallax-container"
+  style="background: rgb({red}, {green}, {blue})">
   {#each layers as layer}
     <svelte:component
       this={layer.component}
