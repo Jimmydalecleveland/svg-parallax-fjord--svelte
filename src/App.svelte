@@ -70,6 +70,7 @@
   {#each layers as layer}
     <svelte:component
       this={layer.component}
+      {scrollY}
       style="transform: translateY({-scrollY * layer.speed}px)" />
   {/each}
 </main>

@@ -3,6 +3,8 @@
   import treesBlown from './treesBlown.js'
   import { easeInOutBack, easeOutBack } from './helpers.js'
   export let style
+  export let scrollY
+
   let intervalId
 
   function initializeSnap() {
@@ -22,6 +24,8 @@
     const allTreePaths = sortedTrees.map(tree => getDarkAndLightTreePaths(tree))
 
     function blowTrees() {
+      if (scrollY > 0) return
+
       let startTime = 0
       allTreePaths.forEach(treePaths => {
         setTimeout(() => {
