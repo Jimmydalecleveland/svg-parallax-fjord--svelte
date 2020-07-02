@@ -12,6 +12,11 @@
   import Wave1 from './Wave1.svelte'
   import Wave2 from './Wave2.svelte'
   import Wave3 from './Wave3.svelte'
+  import SeaFloor1 from './SeaFloor1.svelte'
+  import SeaFloor2 from './SeaFloor2.svelte'
+  import SeaFloor3 from './SeaFloor3.svelte'
+  import Sword from './Sword.svelte'
+  import Sand from './Sand.svelte'
 
   const layers = [
     { component: Cloud2, speed: 0.2 },
@@ -29,6 +34,12 @@
     { component: Wave1, speed: 1 },
   ]
 
+  const seaLayers = [
+    { component: SeaFloor3, speed: 0.38 },
+    { component: SeaFloor2, speed: 0.25 },
+    { component: SeaFloor1, speed: 0.13 },
+  ]
+
   let scrollY
   $: red = scrollY / 2.75
   $: green = 135 - scrollY / 17
@@ -36,29 +47,51 @@
 </script>
 
 <style>
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    background-color: #0087d5;
+  }
   .parallax-container {
     /* This container should stay fixed and centered on viewport resize */
     position: fixed;
-    width: 2560px;
-    height: 1000px;
+    width: 800px;
+    height: 800px;
     left: 50%;
     transform: translate(-50%, 0);
   }
 
   .foreground {
     position: absolute;
-    top: 965px;
-    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    top: 560px;
     width: 100%;
-    height: 100vh;
+    height: 1700px;
     background-color: #37559c;
-    color: white;
   }
 
-  :global(body) {
-    margin: 0;
-    padding: 0;
-    background-color: #0087d5;
+  @media screen and (min-width: 768px) {
+    .parallax-container {
+      width: 1200px;
+      height: 900px;
+    }
+    .foreground {
+      top: 666px;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .parallax-container {
+      width: 2560px;
+      height: 1000px;
+    }
+
+    .foreground {
+      top: 965px;
+    }
   }
 </style>
 
@@ -75,4 +108,13 @@
   {/each}
 </main>
 
-<div class="foreground" />
+<div class="foreground">
+  {#each seaLayers as layer}
+    <svelte:component
+      this={layer.component}
+      {scrollY}
+      style="transform: translateY({scrollY * layer.speed}px)" />
+  {/each}
+  <Sword />
+  <Sand />
+</div>
