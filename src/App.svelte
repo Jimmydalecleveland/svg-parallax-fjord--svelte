@@ -93,6 +93,12 @@
       top: 965px;
     }
   }
+
+  @media screen and (min-width: 2000px) {
+    .foreground {
+      height: 2400px;
+    }
+  }
 </style>
 
 <svelte:window bind:scrollY />
