@@ -47,11 +47,6 @@
 </script>
 
 <style>
-  :global(body) {
-    margin: 0;
-    padding: 0;
-    background-color: #0087d5;
-  }
   .parallax-container {
     /* This container should stay fixed and centered on viewport resize */
     position: fixed;
